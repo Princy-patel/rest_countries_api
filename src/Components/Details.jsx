@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Details() {
   const details = useParams().countries;
@@ -20,26 +20,23 @@ function Details() {
   }, [details]);
 
   return (
-    <div className="bg-red-200">
+    <div className="dark:bg-[#202c37] h-screen w-full flex justify-center items-center gap-7 p-[5vw]">
       {countryDetails.map((country, index) => {
         return (
           <Fragment key={index}>
-            <div>
-              <Link>
-                <img
-                  className="rounded-t-lg w-[30vw] h-[30vh]"
-                  src={country.flags.png}
-                  alt=""
-                />
-              </Link>
+            <div className="flex-1">
+              <img
+                className="rounded-t-lg w-[50vw] h-[50vh]"
+                src={country.flags.png}
+                alt=""
+              />
             </div>
-            <div>
-              <h5 className="mb-2 text-[1.5vw] font-bold tracking-tight text-gray-900 dark:text-white">
-                {country.name.common}
-              </h5>
-
-              <div>
+            <div className="flex-1">
+              <div className="flex justify-around">
                 <div>
+                  <h5 className="mb-2 text-[1.5vw] font-bold tracking-tight text-gray-900 dark:text-white">
+                    {country.name.common}
+                  </h5>
                   <p className="font-normal text-gray-700 dark:text-gray-400">
                     <span className="font-semibold text-[1vw] text-zinc-300">
                       Native Name:{" "}
@@ -74,7 +71,7 @@ function Details() {
                   </p>
                 </div>
 
-                <div>
+                <div className="flex flex-col">
                   <p className="font-normal text-gray-700 dark:text-gray-400">
                     <span className="font-semibold text-[1vw] text-zinc-300">
                       Top Level Domain:{" "}
@@ -102,6 +99,20 @@ function Details() {
                     ))}
                   </p>
                 </div>
+              </div>
+
+              <div className="m-[5vw]">
+                <p className="font-normal text-gray-700 dark:text-gray-400">
+                  <span className="font-semibold text-[1vw] text-zinc-300">
+                    Border Countries:{" "}
+                  </span>
+                  {country.borders?.map((neighbors, index) => (
+                    <span key={index} className="px-2 py-2.5 bg-[#2b3945] m-2">
+                      {neighbors}
+                    </span>
+                  ))}
+                  {/* {country.borders.map((neighbors, index) => <span key={index}>{neighbors}</span>)} */}
+                </p>
               </div>
             </div>
           </Fragment>

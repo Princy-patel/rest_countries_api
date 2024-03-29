@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 function SearchCountry({ searchCountry, inputValue }) {
   return (
-    <form className="max-w-md ml-[20vw]">
+    <form className="max-w-md ml-[10vw] pt-5">
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

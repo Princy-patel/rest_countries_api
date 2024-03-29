@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchCountry from "./SearchCountry";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -33,7 +33,7 @@ function Countries() {
   };
 
   return (
-    <div className="h-full dark:bg-gray-800">
+    <div className="h-full dark:bg-[#202c37]">
       <SearchCountry searchCountry={searchCountry} inputValue={inputValue} />
       <div className=" flex justify-center items-center flex-wrap">
         {filteredCountries.map((country, index) => {
