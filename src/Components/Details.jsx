@@ -1,22 +1,24 @@
-import { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { useParams, useRouteMatch } from "react-router-dom";
 
 function Details() {
   const details = useParams().countries;
+  console.log(details);
   const [countryDetails, setCountryDetails] = useState([]);
-
+  const match = useRouteMatch("country/:countries");
   useEffect(() => {
     const fetchData = async function () {
       const response = await fetch(
         `https://restcountries.com/v3.1/name/${details}`
       );
       const getCountries = await response.json();
+      console.log(getCountries);
       setCountryDetails(getCountries);
     };
 
-    console.log(countryDetails);
-
-    fetchData();
+    if (match && match.isExact) {
+      fetchData();
+    }
   }, [details]);
 
   return (
@@ -41,9 +43,13 @@ function Details() {
                     <span className="font-semibold text-[1vw] text-zinc-300">
                       Native Name:{" "}
                     </span>
-                    {/* {Object.keys(country.name.nativeName).map((key, index) => (
-                      <span key={index}>{country.name.nativeName[0][key].name}</span>
-                    ))} */}
+                    <span key={index}>
+                      {
+                        country.name.nativeName[
+                          Object.keys(country.name.nativeName)[0]
+                        ].official
+                      }
+                    </span>
                   </p>
                   <p className="font-normal text-gray-700 dark:text-gray-400">
                     <span className="font-semibold text-[1vw] text-zinc-300">
