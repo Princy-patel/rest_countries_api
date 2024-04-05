@@ -17,7 +17,7 @@ function SearchCountry({ searchCountry, inputValue, getCountries }) {
     let filteredCountry = countries.filter(
       (name) => name.region === e.target.value
     );
-    getCountries(filteredCountry);
+    getCountries(e.target.value === "all" ? countries : filteredCountry);
   };
 
   return (
@@ -58,9 +58,7 @@ function SearchCountry({ searchCountry, inputValue, getCountries }) {
       </div>
 
       <select onChange={handleRegion} value={region}>
-        <option value="Filtered by Region">
-          Filtered by Region
-        </option>
+        <option value="all">Filtered by Region</option>
         {removeDuplicate.map((region, index) => {
           return <option key={index}>{region}</option>;
         })}
