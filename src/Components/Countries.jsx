@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchCountry from "./SearchCountry";
 import { Link, useNavigate } from "react-router-dom";
+import { DetailsContext } from "./DetailsProvider";
 
 function Countries() {
-  const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [inputValue, setInputValue] = useState("");
+
+  const { countries, setCountries } = useContext(DetailsContext);
 
   const navigate = useNavigate();
 
@@ -32,46 +34,48 @@ function Countries() {
     navigate(`country/${name}`);
   };
 
+  const getCountries = function (regions) {
+    setFilteredCountries(regions);
+  };
+
   return (
     <div className="h-full dark:bg-[#202c37]">
-      <SearchCountry searchCountry={searchCountry} inputValue={inputValue} />
-      <div className=" flex justify-center items-center flex-wrap">
+      <SearchCountry
+        searchCountry={searchCountry}
+        inputValue={inputValue}
+        getCountries={getCountries}
+      />
+      <div className="flex flex-wrap justify-center items-center gap-5 p-5">
         {filteredCountries.map((country, index) => {
           return (
             <div
               key={index}
-              className="m-5 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-700 dark:border-gray-700 drop-shadow-2xl"
+              className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-5 shadow dark:bg-gray-700 dark:border-gray-700 drop-shadow-2xl bg-white border border-gray-200 rounded-lg h-full"
               onClick={getDetails.bind(null, country.name.common)}
             >
               <Link>
                 <img
-                  className="rounded-t-lg w-[30vw] h-[30vh]"
+                  className="rounded-lg w-full h-[30vh]"
                   src={country.flags.png}
                   alt=""
                 />
               </Link>
-              <div className="p-5">
+              <div className="p-3">
                 <Link>
-                  <h5 className="mb-2 text-[1.5vw] font-bold tracking-tight text-gray-900 dark:text-white">
+                  <h5 className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                     {country.name.common}
                   </h5>
                 </Link>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  <span className="font-semibold text-[1vw] text-zinc-300">
-                    Population:{" "}
-                  </span>
+                <p className="text-sm font-normal text-gray-700 dark:text-gray-400">
+                  <span className="font-semibold">Population:</span>{" "}
                   {country.population}
                 </p>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  <span className="font-semibold text-[1vw] text-zinc-300">
-                    Region:{" "}
-                  </span>
+                <p className="text-sm font-normal text-gray-700 dark:text-gray-400">
+                  <span className="font-semibold">Region:</span>{" "}
                   {country.region}
                 </p>
-                <p className="font-normal text-gray-700 dark:text-gray-400">
-                  <span className="font-semibold text-[1vw] text-zinc-300">
-                    Capital:{" "}
-                  </span>
+                <p className="text-sm font-normal text-gray-700 dark:text-gray-400">
+                  <span className="font-semibold">Capital:</span>{" "}
                   {country.capital}
                 </p>
               </div>

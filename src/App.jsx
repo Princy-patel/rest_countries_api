@@ -3,11 +3,16 @@ import Countries from "./Components/Countries";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Base from "./Components/Base";
 import Details from "./Components/Details";
+import DetailsProvider from "./Components/DetailsProvider";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Base />,
+    element: (
+      <DetailsProvider>
+        <Base />
+      </DetailsProvider>
+    ),
     children: [
       {
         path: "/",

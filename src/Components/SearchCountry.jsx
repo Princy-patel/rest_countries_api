@@ -1,6 +1,25 @@
 import PropTypes from "prop-types";
+import { DetailsContext } from "./DetailsProvider";
+import { useContext, useState } from "react";
 
-function SearchCountry({ searchCountry, inputValue }) {
+function SearchCountry({ searchCountry, inputValue, getCountries }) {
+  const [region, setRegion] = useState("");
+  const { countries } = useContext(DetailsContext);
+
+  let regions = countries.map((region) => {
+    return region.region;
+  });
+
+  let removeDuplicate = [...new Set(regions)];
+
+  const handleRegion = function (e) {
+    setRegion(e.target.value);
+    let filteredCountry = countries.filter(
+      (name) => name.region === e.target.value
+    );
+    getCountries(filteredCountry);
+  };
+
   return (
     <form className="max-w-md ml-[10vw] pt-5">
       <label
@@ -37,6 +56,15 @@ function SearchCountry({ searchCountry, inputValue }) {
           value={inputValue}
         />
       </div>
+
+      <select onChange={handleRegion} value={region}>
+        <option value="Filtered by Region">
+          Filtered by Region
+        </option>
+        {removeDuplicate.map((region, index) => {
+          return <option key={index}>{region}</option>;
+        })}
+      </select>
     </form>
   );
 }
@@ -44,5 +72,6 @@ function SearchCountry({ searchCountry, inputValue }) {
 SearchCountry.propTypes = {
   searchCountry: PropTypes.func.isRequired,
   inputValue: PropTypes.string.isRequired,
+  getCountries: PropTypes.func,
 };
 export default SearchCountry;
